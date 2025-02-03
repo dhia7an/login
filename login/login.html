@@ -1,0 +1,228 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="login" content="width=device-width, initial-scale=1.0">
+  <title>School Registration</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: 'Arial', sans-serif;
+    }
+
+    body {
+      background: #f0f2f5;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      min-height: 100vh;
+    }
+
+    .registration-container {
+      background: white;
+      padding: 2rem;
+      border-radius: 10px;
+      box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
+      width: 100%;
+      max-width: 500px;
+    }
+
+    .role-selector {
+      display: flex;
+      gap: 1rem;
+      margin-bottom: 2rem;
+    }
+
+    .role-tab {
+      flex: 1;
+      padding: 1rem;
+      text-align: center;
+      cursor: pointer;
+      border-radius: 5px;
+      background: #f8f9fa;
+      transition: all 0.3s ease;
+    }
+
+    .role-tab.active {
+      background: #3498db;
+      color: white;
+    }
+
+    .registration-form {
+      display: none;
+      animation: fadeIn 0.3s ease;
+    }
+
+    .registration-form.active {
+      display: block;
+    }
+
+    .form-group {
+      margin-bottom: 1.5rem;
+    }
+
+    label {
+      display: block;
+      margin-bottom: 0.5rem;
+      color: #2c3e50;
+      font-weight: 500;
+    }
+
+    input,
+    select {
+      width: 100%;
+      padding: 0.8rem;
+      border: 2px solid #e9ecef;
+      border-radius: 5px;
+      font-size: 1rem;
+      transition: border-color 0.3s ease;
+    }
+
+    input:focus,
+    select:focus {
+      outline: none;
+      border-color: #3498db;
+      box-shadow: 0 0 0 3px rgba(52, 152, 219, 0.2);
+    }
+
+    .specialization-select {
+      appearance: none;
+      background-image: url("data:image/svg+xml;charset=UTF-8,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='currentColor' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3e%3cpolyline points='6 9 12 15 18 9'%3e%3c/polyline%3e%3c/svg%3e");
+      background-repeat: no-repeat;
+      background-position: right 1rem center;
+      background-size: 1em;
+    }
+
+    button {
+      width: 100%;
+      padding: 1rem;
+      background: #3498db;
+      color: white;
+      border: none;
+      border-radius: 5px;
+      font-size: 1rem;
+      cursor: pointer;
+      transition: background 0.3s ease;
+    }
+
+    button:hover {
+      background: #2980b9;
+    }
+
+    @keyframes fadeIn {
+      from {
+        opacity: 0;
+        transform: translateY(-10px);
+      }
+
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    @media (max-width: 480px) {
+      .registration-container {
+        margin: 1rem;
+        padding: 1.5rem;
+      }
+    }
+  </style>
+</head>
+
+<body>
+  <div class="registration-container">
+    <div class="role-selector">
+      <div class="role-tab active" data-role="student">Student</div>
+      <div class="role-tab" data-role="teacher">Teacher</div>
+    </div>
+
+    <!-- Student Registration Form -->
+    <form class="registration-form active" id="studentForm">
+      <div class="form-group">
+        <label for="studentName">First Name</label>
+        <input type="text" id="studentName" required>
+      </div>
+
+      <div class="form-group">
+        <label for="studentSurname">Last Name</label>
+        <input type="text" id="studentSurname" required>
+      </div>
+
+      <div class="form-group">
+        <label for="studentSpecialization">Specialization</label>
+        <select class="specialization-select" id="studentSpecialization" required>
+          <option value="">Select Specialization</option>
+          <option value="Industrial electronics">Industrial electronics</option>
+          <option value="MSI">MSI</option>
+          <option value="Accounting and Finance ">Accounting and Finance</option>
+          <option value="Human Resources Manager">Human Resources Manager </option>
+          <option value="arts">Arts</option>
+          <option value="sports">Sports</option>
+        </select>
+      </div>
+
+      <button type="submit">Create Student Account</button>
+    </form>
+
+    <!-- Teacher Registration Form -->
+    <form class="registration-form" id="teacherForm">
+      <div class="form-group">
+        <label for="teacherName">First Name</label>
+        <input type="text" id="teacherName" required>
+      </div>
+
+      <div class="form-group">
+        <label for="teacherSurname">Last Name</label>
+        <input type="text" id="teacherSurname" required>
+      </div>
+
+      <div class="form-group">
+        <label for="teacherNumber">Teacher ID Number</label>
+        <input type="text" id="teacherNumber" pattern="[A-Za-z0-9]{8}" title="8-character alphanumeric ID" required>
+      </div>
+
+      <button type="submit">Create Teacher Account</button>
+    </form>
+  </div>
+
+  <script>
+    // Toggle between forms
+    const roleTabs = document.querySelectorAll('.role-tab');
+    const forms = document.querySelectorAll('.registration-form');
+    roleTabs.forEach(tab => {
+      tab.addEventListener('click', () => {
+        // Remove active class from all
+        roleTabs.forEach(t => t.classList.remove('active'));
+        forms.forEach(form => form.classList.remove('active'));
+        // Add active class to selected
+        tab.classList.add('active');
+        const role = tab.dataset.role;
+        document.getElementById(`${role}Form`).classList.add('active');
+      });
+    });
+    // Form submission handling
+    document.getElementById('studentForm').addEventListener('submit', (e) => {
+      e.preventDefault();
+      // Add student registration logic here
+      alert('Student account created successfully!');
+    });
+    document.getElementById('teacherForm').addEventListener('submit', (e) => {
+      e.preventDefault();
+      // Add teacher registration logic here
+      alert('Teacher account created successfully!');
+    });
+  </script>
+</body>
+
+</html>
+
+
+
+
+
+
+
